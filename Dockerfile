@@ -1,5 +1,8 @@
 FROM php:7-apache-bullseye
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
+RUN sed -i 's/deb\.debian\.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list && \
+    sed -i 's/security\.debian\.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list && \
+    apt-get update
+ADD https://ghproxy.com/github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions gd mysqli pdo_mysql && \
     apt-get clean && \
