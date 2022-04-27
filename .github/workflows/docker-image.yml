@@ -1,0 +1,22 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: |
+        docker login -u uniqptr -p ${{ secrets.DOCKER_PASSWORD }}
+        tag=$(date +%Y%m%d)-$(git rev-parse --short HEAD)-$(git rev-parse --abbrev-ref HEAD)
+        docker build . --file Dockerfile --tag uniqptr/dvwa:$tag
+        docker push uniqptr/dvwa:$tag

@@ -1,0 +1,4 @@
+CREATE DATABASE dvwa;
+CREATE USER 'dvwa'@'%' IDENTIFIED BY 'p@ssw0rd';
+GRANT ALL ON dvwa.* TO 'dvwa'@'%';
+FLUSH PRIVILEGES;
